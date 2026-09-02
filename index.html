@@ -1,3 +1,50 @@
-<html>
-    
+<!DOCTYPE html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AMAbot</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+
+    <main class="chat-bot">
+
+    <section class="chat-pfp">
+
+    </section>    
+
+    <section class="chat-app">
+      <header class="chat-header">
+        <div class="avatar" aria-hidden="true">A</div>
+        <div>
+          <h1>AMAbot</h1>
+          <p><span class="status-dot"></span> Spørg mig om alt</p>
+        </div>
+      </header>
+
+      <section id="chatMessages" class="chat-messages" aria-live="polite">
+        <article class="message bot-message">
+          <p>Hej! Jeg er Andreas' AMAbot 👋 Spørg mig fx om uddannelse, interesser eller erfaring.</p>
+          <time>Nu</time>
+        </article>
+      </section>
+
+      <form id="chatForm" class="chat-form">
+        <label class="sr-only" for="messageInput">Skriv en besked</label>
+        <input
+          id="messageInput"
+          name="message"
+          type="text"
+          placeholder="Skriv din besked..."
+          autocomplete="off"
+          required
+        />
+        <button type="submit">Send</button>
+      </form>
+    </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
 </html>
