@@ -4,21 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AMAbot</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
   </head>
+  
   <body>
-
-    <main class="chat-bot">
-
-    <section class="chat-pfp">
-
-    </section>    
-
-    <section class="chat-app">
-      <header class="chat-header">
+   
+    <main class="chat-app">
+     
+        <header class="chat-header">
         <div class="avatar" aria-hidden="true">A</div>
         <div>
-          <h1>AMAbot</h1>
+          <h1>Andreas' AMAbot</h1>
           <p><span class="status-dot"></span> Spørg mig om alt</p>
         </div>
       </header>
@@ -28,21 +28,25 @@
           <p>Hej! Jeg er Andreas' AMAbot 👋 Spørg mig fx om uddannelse, interesser eller erfaring.</p>
           <time>Nu</time>
         </article>
+
+        <article class="message user-message">
+          <p>Hej! Jeg er Andreas' AMAbot 👋 Spørg mig fx om uddannelse, interesser eller erfaring.</p>
+          <time>Nu</time>
+        </article>
       </section>
 
       <form id="chatForm" class="chat-form">
-        <label class="sr-only" for="messageInput">Skriv en besked</label>
+        <label class="sr-only" for="messageInput">Skriv et spørgsmål</label>
         <input
           id="messageInput"
           name="message"
           type="text"
-          placeholder="Skriv din besked..."
+          placeholder="Stil mig et spørgsmål..."
           autocomplete="off"
           required
         />
         <button type="submit">Send</button>
       </form>
-    </section>
     </main>
 
     <script src="script.js"></script>
