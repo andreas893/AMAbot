@@ -39,31 +39,40 @@
       </header>
 
       <section id="chatMessages" class="chat-messages" aria-live="polite">
-        <article class="message bot-message">
-          <p>Hej! Jeg er Andreas' AMAbot 👋 Spørg mig fx om uddannelse, interesser eller erfaring.</p>
-          <time>Nu</time>
-        </article>
+          <article class="message answer">
+          <p>
+            Hej! Jeg er Andreas' AMAbot 👋 Spørg mig fx om
+            uddannelse, interesser eller erfaring.
+          </p>
 
-        <article class="message user-message">
-          <p>Hej! Jeg er Andreas' AMAbot 👋 Spørg mig fx om uddannelse, interesser eller erfaring.</p>
           <time>Nu</time>
         </article>
+        
+        <% for (const message of messages) { %>
+        <article class="message <%= message.type %>">
+          <p><%= message.text %></p>
+          <time>Nu</time>
+        </article>  
+        <% } %>
+        
       </section>
 
-      <form id="chatForm" class="chat-form">
-        <label class="sr-only" for="messageInput">Skriv et spørgsmål</label>
+      <form id="chatForm" class="chat-form" method="POST" action="/ask">
+        <label class="sr-only" for="question">Skriv et spørgsmål</label>
         <input
-          id="messageInput"
-          name="message"
-          type="text"
+          id="question"
+          name="question"
+          type="question"
+          text=question
           placeholder="Stil mig et spørgsmål..."
           autocomplete="off"
           required
         />
         <button type="submit">Send</button>
       </form>
+
     </main>
 
-    <script src="ascii.js"></script>
+    <script src="/assets/ascii.js"></script>
   </body>
 </html>

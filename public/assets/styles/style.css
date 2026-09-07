@@ -127,19 +127,19 @@ body {
   font-size: 0.72rem;
 }
 
-.bot-message {
+.answer {
   align-self: flex-start;
   background: var(--light-text);
   border-bottom-left-radius: 4px;
 }
 
-.user-message {
+.question {
   align-self: flex-end;
   background: var(--primary);
   color: var(--light-text);
 }
 
-.user-message time {
+.qustion time {
   color: rgba(255, 255, 255, 0.75);
   text-align: right;
 }
