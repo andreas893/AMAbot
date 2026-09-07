@@ -54,7 +54,12 @@
           <time>Nu</time>
         </article>  
         <% } %>
-        
+
+        <% if (error) { %>
+          <article class="error message">
+            <p role="alert"><%= error %></p>
+          </article>
+        <% } %>
       </section>
 
       <form id="chatForm" class="chat-form" method="POST" action="/ask">
@@ -66,7 +71,6 @@
           text=question
           placeholder="Stil mig et spørgsmål..."
           autocomplete="off"
-          required
         />
         <button type="submit">Send</button>
       </form>

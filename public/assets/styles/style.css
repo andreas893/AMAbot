@@ -139,6 +139,11 @@ body {
   color: var(--light-text);
 }
 
+.error {
+  align-self: flex-end;
+  background: var(--light-text);
+}
+
 .qustion time {
   color: rgba(255, 255, 255, 0.75);
   text-align: right;
