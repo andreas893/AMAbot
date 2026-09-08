@@ -36,6 +36,12 @@
           <h1>Andreas' AMAbot</h1>
           <p><span class="status-dot"></span> Spørg mig om alt</p>
         </div>
+
+        <div>
+          <form method="POST" action="/clear">
+            <button type="submit" class="clear-button">Ryd beskeder</button>
+          </form>
+        </div>
       </header>
 
       <section id="chatMessages" class="chat-messages" aria-live="polite">
@@ -48,10 +54,11 @@
           <time>Nu</time>
         </article>
         
+        <!-- Chat svar -->
         <% for (const message of messages) { %>
         <article class="message <%= message.type %>">
           <p><%= message.text %></p>
-          <time>Nu</time>
+          <time><%= message.createdAt.toLocaleTimeString("da-DK") %></time>
         </article>  
         <% } %>
 
@@ -74,7 +81,6 @@
         />
         <button type="submit">Send</button>
       </form>
-
     </main>
 
     <script src="/assets/ascii.js"></script>

@@ -13,15 +13,19 @@ const messages = [];
 const answers = [
     {
         keywords: ["navn", "hedder", "hvem er du"],
-        answer: "Jeg hedder Andreas. Hvad kunne du ellers tænke dig at vide om mig?"
+        answers: 
+        "Jeg hedder Andreas. Hvad kunne du ellers tænke dig at vide om mig?"
     },
     {
         keywords: ["bor", "fra"],
-        answer: "Jeg bor i Århus (Risskov), men kommer oprindeligt fra, en lille by tæt på Kolding, Jordrup."
+        answers: "Jeg bor i Århus (Risskov), men kommer oprindeligt fra, en lille by tæt på Kolding, Jordrup."
     },
     {
         keywords: ["fritid", "hobby", "kan lide"],
-        answer: "I min fritid kan jeg godt lide at lave lidt forskellige ting. Jeg kan godt lide at løbe, jeg spiller en del computerspil og jeg kan godt lide at læse."
+        answers: [
+        "I min fritid kan jeg godt lide at lave lidt forskellige ting. Jeg kan godt lide at løbe, jeg spiller en del computerspil og jeg kan godt lide at læse.",
+        "Jeg kan godt lide at læse manga og ser også en del anime. Jeg kan også godt lide at se film og serier."
+        ]
     }
 ];
 
@@ -33,7 +37,8 @@ function findAnswer(question) {
         const hasMatch = answerGroup.keywords.some((keyword) => normalizedQuestion.includes(keyword));
 
         if (hasMatch) {
-            return answerGroup.answer;
+            const randomIndex = Math.floor(Math.random() * answerGroup.answers.length)
+            return answerGroup.answers[randomIndex];
         }
     }
 
@@ -56,13 +61,20 @@ app.post("/ask", (req, res) => {
 
     if (!question) {
         error = "Skriv et spørgsmål, før du sender"
+    } else if (question.length > 280) {
+        error = "Spørgsmålet må højst være 280 tegn langt. Prøv at forkorte det."
     } else {
-        messages.push({ type: "question", text: question });
+        messages.push({ type: "question", text: question, createdAt: new Date() });
         const answer = findAnswer(question);
-        messages.push({ type: "answer", text: answer });
+        messages.push({ type: "answer", text: answer, createdAt: new Date() });
     }    
     res.render("index", { messages, error });
 });
+
+app.post("/clear", (req, res) => {
+    messages.length = 0;
+    res.redirect("/")
+})
 
 
 app.listen(port, () => {
