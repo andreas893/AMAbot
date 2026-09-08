@@ -29,6 +29,48 @@ const answers = [
     }
 ];
 
+function countMatches(keywords, normalizedQuestion) {
+    const matches = keywords.filter((keyword) => 
+        normalizedQuestion.includes(keyword)
+    );
+
+    return matches.length;
+};
+
+function findBestAnswer(question) {
+    const normalizedQuestion = question.toLowerCase();
+    let bestScore = 0;
+    let bestAnswer = "Det kender jeg ikke svaret på endnu"
+
+    for (const answerGroup of answers) {
+        const score = countMatches(answerGroup.keywords, normalizedQuestion);
+
+        if (score>bestScore) {
+            bestScore = score;
+            bestAnswer = answerGroup.answers;
+        };   
+    };
+    return bestAnswer;
+    
+};
+
+console.log(
+    findBestAnswer("Hvad hedder du, hvad er dit navn, og hvor bor du?")
+);
+
+console.log(
+    findBestAnswer("Hvor bor du, og hvor er du fra, og hvad hedder du?")
+);
+
+console.log(
+    findBestAnswer("Kan du bage en kage?")
+);
+
+console.log(
+    findBestAnswer("Hvad hedder du, og hvor bor du?")
+);
+
+
 
 function findAnswer(question) {
     const normalizedQuestion = question.toLowerCase();
@@ -65,7 +107,7 @@ app.post("/ask", (req, res) => {
         error = "Spørgsmålet må højst være 280 tegn langt. Prøv at forkorte det."
     } else {
         messages.push({ type: "question", text: question, createdAt: new Date() });
-        const answer = findAnswer(question);
+        const answer = findBestAnswer(question);
         messages.push({ type: "answer", text: answer, createdAt: new Date() });
     }    
     res.render("index", { messages, error });
