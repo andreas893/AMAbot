@@ -12,15 +12,18 @@ const messages = [];
 
 const answers = [
     {
+        category: "name",
         keywords: ["navn", "hedder", "hvem er du"],
         answers: 
         "Jeg hedder Andreas. Hvad kunne du ellers tænke dig at vide om mig?"
     },
     {
+        category: "city",
         keywords: ["bor", "fra"],
         answers: "Jeg bor i Århus (Risskov), men kommer oprindeligt fra, en lille by tæt på Kolding, Jordrup."
     },
     {
+        category: "hobby",
         keywords: ["fritid", "hobby", "kan lide"],
         answers: [
         "I min fritid kan jeg godt lide at lave lidt forskellige ting. Jeg kan godt lide at løbe, jeg spiller en del computerspil og jeg kan godt lide at læse.",
@@ -41,6 +44,7 @@ function findBestAnswer(question) {
     const normalizedQuestion = question.toLowerCase();
     let bestScore = 0;
     let bestAnswer = "Det kender jeg ikke svaret på endnu"
+    let bestCategory = "";
 
     for (const answerGroup of answers) {
         const score = countMatches(answerGroup.keywords, normalizedQuestion);
@@ -48,9 +52,14 @@ function findBestAnswer(question) {
         if (score>bestScore) {
             bestScore = score;
             bestAnswer = answerGroup.answers;
+            bestCategory = answerGroup.category;
         };   
     };
-    return bestAnswer;
+
+    return {
+        answer: bestAnswer,
+        category: bestCategory
+    };
     
 };
 
@@ -91,9 +100,14 @@ function sanitizeQuestion(input) {
     return input.replace(/[\u0000-\u001F\u007F]/g, "");
 };
 
+const topicStats = {
+    name: 0,
+    city: 0,
+    hobby: 0
+};
 
 app.get("/", (req, res) => {
-    res.render("index", { messages, error: ""});
+    res.render("index", { messages, error: "", topicStats});
 });
 
 app.post("/ask", (req, res) => {
@@ -107,10 +121,17 @@ app.post("/ask", (req, res) => {
         error = "Spørgsmålet må højst være 280 tegn langt. Prøv at forkorte det."
     } else {
         messages.push({ type: "question", text: question, createdAt: new Date() });
-        const answer = findBestAnswer(question);
-        messages.push({ type: "answer", text: answer, createdAt: new Date() });
+        
+        const result = findBestAnswer(question);
+        messages.push({ type: "answer", text: result.answer, createdAt: new Date() });
+        
+        if (result.category) {
+        topicStats[result.category] = topicStats[result.category] + 1;
+        }
+        console.log(topicStats)
     }    
-    res.render("index", { messages, error });
+    
+    res.render("index", { messages, error, topicStats });
 });
 
 app.post("/clear", (req, res) => {
