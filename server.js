@@ -63,38 +63,20 @@ function findBestAnswer(question) {
     
 };
 
-console.log(
-    findBestAnswer("Hvad hedder du, hvad er dit navn, og hvor bor du?")
-);
+// function findAnswer(question) {
+//     const normalizedQuestion = question.toLowerCase();
 
-console.log(
-    findBestAnswer("Hvor bor du, og hvor er du fra, og hvad hedder du?")
-);
+//     for (const answerGroup of answers) {
+//         const hasMatch = answerGroup.keywords.some((keyword) => normalizedQuestion.includes(keyword));
 
-console.log(
-    findBestAnswer("Kan du bage en kage?")
-);
+//         if (hasMatch) {
+//             const randomIndex = Math.floor(Math.random() * answerGroup.answers.length)
+//             return answerGroup.answers[randomIndex];
+//         }
+//     }
 
-console.log(
-    findBestAnswer("Hvad hedder du, og hvor bor du?")
-);
-
-
-
-function findAnswer(question) {
-    const normalizedQuestion = question.toLowerCase();
-
-    for (const answerGroup of answers) {
-        const hasMatch = answerGroup.keywords.some((keyword) => normalizedQuestion.includes(keyword));
-
-        if (hasMatch) {
-            const randomIndex = Math.floor(Math.random() * answerGroup.answers.length)
-            return answerGroup.answers[randomIndex];
-        }
-    }
-
-    return "Det kender jeg ikke svaret på endnu.";
-}
+//     return "Det kender jeg ikke svaret på endnu.";
+// }
 
 function sanitizeQuestion(input) {
     return input.replace(/[\u0000-\u001F\u007F]/g, "");
@@ -106,12 +88,17 @@ const topicStats = {
     hobby: 0
 };
 
+// routes
+
+// get route
 app.get("/", (req, res) => {
     res.render("index", { messages, error: "", topicStats});
 });
 
+// post route
 app.post("/ask", (req, res) => {
     const rawQuestion = req.body.question;
+
     const question = sanitizeQuestion(rawQuestion).trim();
     let error = "";
 
@@ -134,6 +121,7 @@ app.post("/ask", (req, res) => {
     res.render("index", { messages, error, topicStats });
 });
 
+// clear messages route
 app.post("/clear", (req, res) => {
     messages.length = 0;
     res.redirect("/")

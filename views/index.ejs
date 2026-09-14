@@ -13,9 +13,9 @@
   
   <body>
      <!-- <canvas id="ascii-background" aria-hidden="true"></canvas> -->
-    <main class="chat-app">
-        
-     
+    <main class="main-chat">
+
+      <div class="chat-app">
         <header class="chat-header">
         <div class="avatar" aria-hidden="true">
            <video
@@ -35,21 +35,6 @@
         <div>
           <h1>Andreas' AMAbot</h1>
           <p><span class="status-dot"></span> Spørg mig om alt</p>
-        </div>
-
-        <div>
-          <form method="POST" action="/clear">
-            <button type="submit" class="clear-button">Ryd beskeder</button>
-          </form>
-        </div>
-
-        <div>
-          <h3>Spørgsmål fordelt på emner</h3>
-          <ul>
-            <li>Navn: <%= topicStats.name %></li>
-            <li>Bosted: <%= topicStats.city %></li>
-            <li>Fritid: <%= topicStats.hobby %></li>
-          </ul>
         </div>
       </header>
 
@@ -90,6 +75,25 @@
         />
         <button type="submit">Send</button>
       </form>
+    </div>
+
+    <!-- Stats og clear knap -->
+      <div class="chat-aside">
+        <div>
+          <div>
+            <form method="POST" action="/clear">
+              <button type="submit" class="clear-button">Ryd beskeder</button>
+            </form>
+          </div>
+
+            <h3>Spørgsmål fordelt på emner</h3>
+            <ul>
+              <li>Navn: <%= topicStats.name %></li>
+              <li>Bosted: <%= topicStats.city %></li>
+              <li>Fritid: <%= topicStats.hobby %></li>
+            </ul>
+          </div>
+      </div>
     </main>
 
     <script src="/assets/ascii.js"></script>

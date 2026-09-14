@@ -28,6 +28,10 @@ body {
   font-family: "Chivo Mono", monospace;
 }
 
+.main-chat{
+  display: flex;
+}
+
 .chat-app {
   width: min(100%, 720px);
   height: min(760px, calc(100vh - 48px));
@@ -38,6 +42,18 @@ body {
   border-radius: 2px;
   box-shadow: 0 18px 50px rgba(44, 31, 73, 0.12);
   position: relative;
+}
+
+.chat-aside{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  box-shadow: 0 18px 50px rgba(44, 31, 73, 0.12);
+  padding: 20px 24px;
 }
 
 .chat-header {
