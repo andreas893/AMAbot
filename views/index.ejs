@@ -52,7 +52,7 @@
         <% for (const message of messages) { %>
         <article class="message <%= message.type %>">
           <p><%= message.text %></p>
-          <time><%= message.createdAt.toLocaleTimeString("da-DK") %></time>
+          <time><%= new Date(message.createdAt).toLocaleTimeString("da-DK") %></time>
         </article>  
         <% } %>
 

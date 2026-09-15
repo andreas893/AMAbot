@@ -1,4 +1,5 @@
 import express from "express";
+import fs from "node:fs/promises";
 
 const server =  express();
 
@@ -7,8 +8,6 @@ const port = 3000;
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
-
-const messages = [];
 
 const answers = [
     {
@@ -40,8 +39,17 @@ function countMatches(keywords, normalizedQuestion) {
     return matches.length;
 };
 
+// Normaliser spørgsmål
+function normalizeQuestion(question) {
+    return question
+    .replace(/[\u0000-\u001F\u007F]/g, " ")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ");
+};
+
 function findBestAnswer(question) {
-    const normalizedQuestion = question.toLowerCase();
+    const normalizedQuestion = normalizeQuestion(question);
     let bestScore = 0;
     let bestAnswer = "Det kender jeg ikke svaret på endnu"
     let bestCategory = "";
@@ -63,40 +71,48 @@ function findBestAnswer(question) {
     
 };
 
-// function findAnswer(question) {
-//     const normalizedQuestion = question.toLowerCase();
-
-//     for (const answerGroup of answers) {
-//         const hasMatch = answerGroup.keywords.some((keyword) => normalizedQuestion.includes(keyword));
-
-//         if (hasMatch) {
-//             const randomIndex = Math.floor(Math.random() * answerGroup.answers.length)
-//             return answerGroup.answers[randomIndex];
-//         }
-//     }
-
-//     return "Det kender jeg ikke svaret på endnu.";
-// }
 
 function sanitizeQuestion(input) {
     return input.replace(/[\u0000-\u001F\u007F]/g, "");
 };
 
-const topicStats = {
-    name: 0,
-    city: 0,
-    hobby: 0
+
+// Hjælpefunktioner til save og load af messages
+
+async function loadMessages() {
+    const data = await fs.readFile("./data/messages.json", "utf8");
+    return JSON.parse(data);
 };
+
+async function saveMessages(messages) {
+    const json = JSON.stringify(messages, null, 2);
+    await fs.writeFile("./data/messages.json", json);
+};
+
+// hjælpefuntkioner til save og load af topicstats
+async function loadTopicStats() {
+    const data = await fs.readFile("./data/topicStats.json", "utf8");
+    return JSON.parse(data);
+}
+
+async function saveTopicStats(topicStats) {
+    const json = JSON.stringify(topicStats, null, 2)
+    await fs.writeFile("./data/topicStats.json", json);
+}
 
 // routes
 
 // get route
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+    const messages = await loadMessages();
+    const topicStats = await loadTopicStats();
     res.render("index", { messages, error: "", topicStats});
 });
 
 // post route
-app.post("/ask", (req, res) => {
+app.post("/ask", async (req, res) => {
+    const messages = await loadMessages();
+    const topicStats = await loadTopicStats();
     const rawQuestion = req.body.question;
 
     const question = sanitizeQuestion(rawQuestion).trim();
@@ -117,13 +133,17 @@ app.post("/ask", (req, res) => {
         }
         console.log(topicStats)
     }    
+
+    await saveMessages(messages);
+    await saveTopicStats(topicStats);
     
     res.render("index", { messages, error, topicStats });
 });
 
 // clear messages route
-app.post("/clear", (req, res) => {
-    messages.length = 0;
+app.post("/clear", async (req, res) => {
+    await saveMessages([]);
+    await saveTopicStats({ name: 0, city: 0, hobby: 0, ukendt: 0})
     res.redirect("/")
 })
 
