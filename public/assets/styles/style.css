@@ -222,6 +222,14 @@ body {
   border: 0;
 }
 
+.char-counter{
+  text-align: right;
+  font-size: 0.9em;
+  color: #666;
+}
+
+.char-counter.warning { color: orange; }
+.char-counter.danger { color: red; }
 
 @media (max-width: 600px) {
   body {

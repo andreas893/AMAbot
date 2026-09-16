@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/styles/style.css" />
+    <script src="script.js" defer></script>
   </head>
   
   <body>
@@ -24,6 +25,7 @@
                 loop
                 muted
                 playsinline
+                l
                 aria-label="ASCII-animation af Killua"
                 >
                 <source
@@ -86,6 +88,7 @@
             </form>
           </div>
 
+          <div>
             <h3>Spørgsmål fordelt på emner</h3>
             <ul>
               <li>Navn: <%= topicStats.name %></li>
@@ -93,9 +96,15 @@
               <li>Fritid: <%= topicStats.hobby %></li>
             </ul>
           </div>
+
+          <div class="char-counter">
+            <span id="char-count">0</span>/280
+          </div>
+            
+          </div>
       </div>
     </main>
 
-    <script src="/assets/ascii.js"></script>
+    <!-- <script src="/assets/ascii.js"></script> -->
   </body>
 </html>
