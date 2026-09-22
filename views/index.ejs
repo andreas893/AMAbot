@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/styles/style.css" />
-    <script src="script.js" defer></script>
+    <script src="/script.js" defer></script>
   </head>
   
   <body>
@@ -70,12 +70,12 @@
         <input
           id="question"
           name="question"
-          type="question"
-          text=question
+          type="text"
           placeholder="Stil mig et spørgsmål..."
           autocomplete="off"
         />
         <button type="submit">Send</button>
+        <div id="error-message" style="color: red;"></div>
       </form>
     </div>
 

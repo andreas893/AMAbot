@@ -31,6 +31,10 @@ const answers = [
     }
 ];
 
+
+
+
+
 function countMatches(keywords, normalizedQuestion) {
     const matches = keywords.filter((keyword) => 
         normalizedQuestion.includes(keyword)
@@ -77,7 +81,7 @@ function sanitizeQuestion(input) {
 };
 
 
-// Hjælpefunktioner til save og load af messages
+// Hjælpefunktioner til save og load af messages -----------------------------------------------
 
 async function loadMessages() {
     const data = await fs.readFile("./data/messages.json", "utf8");
